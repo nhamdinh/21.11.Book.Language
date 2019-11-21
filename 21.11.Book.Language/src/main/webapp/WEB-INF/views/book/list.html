@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{book.list.book}"></title>
+</head>
+<body>
+<p th:text="${param.lang}"></p>
+<form onchange="this.submit()">
+    <select name="lang">
+        <option value="">LANGUAGE</option>
+        <option value="en" >English</option>
+
+        <option value="vi" >Viet Nam</option>
+    </select>
+</form>
+<p><a href="/categories"><button type="button" th:text="#{book.list.categoryList}"></button></a></p>
+<a href="/create-book" th:text="#{login.title}"></a>
+<h1 th:text="#{book.list.book}"></h1>
+<form>
+    <p th:text="#{book.list.searchBY}"></p>
+    <input name="s" type="text"/>
+    <input type="submit" th:value="#{book.list.search}"/>
+</form>
+<p><a th:href="@{/sortByPriceAsc}"><button type="button" th:text="#{book.list.sortDA}"></button></a></p>
+<p><a th:href="@{/sortByPriceDesc}"><button type="button" th:text="#{book.list.sortAD}"></button></a></p>
+<form action="/searchByCategory" onchange="this.submit()">
+    <a th:text="#{book.list.searchByCategory}"></a>
+    <select name="search">
+        <option th:each="d:${categories}" th:text="${d.name}" th:value="${d.getId()}"></option>
+    </select>
+
+</form>
+<br/>
+<fieldset style="width: fit-content; height: fit-content">
+
+<table border="1" style="width: fit-content; height: fit-content">
+
+    <tr style="width: fit-content; height: fit-content">
+        <th th:text="#{book.create.name}"></th>
+        <td th:text="#{book.create.date}"></td>
+        <td th:text="#{book.create.Author}"></td>
+        <td th:text="#{book.create.Price}"></td>
+        <td th:text="#{book.create.Category}"></td>
+        <th th:text="#{book.edit.edit}"></th>
+        <th th:text="#{book.delete.delete}"></th>
+    </tr>
+    <th:block th:each="book : ${books}">
+        <tr style="width: fit-content; height: fit-content">
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.dateOfPurchase}">
+            <td th:text="${book.author}">
+            <td th:text="${book.price}">
+            <td th:text="${book.getCategory().getName()}"></td>
+        </tr>
+        <td><a th:href="@{/edit-book/__${book.id}__ }" th:text="#{book.edit.edit}"></a></td>
+        <td><a th:href="@{/delete-book/__${book.id}__ }" th:text="#{book.delete.delete}"></a></td>
+        </tr>
+    </th:block>
+    <div>
+        <a th:href="@{'/book'(page=${books.number - 1})}" th:if="${books.hasPrevious()}" th:text="#{book.list.Previous}"></a>
+        <span th:text="${books.number + 1}"></span>/<span th:text="${books.totalPages}"></span>
+        <a th:href="@{'/book'(page=${books.number + 1})}" th:if="${books.hasNext()}" th:text="#{book.list.next}"></a>
+    </div>
+</table>
+</fieldset>
+
+</body>
+</html>

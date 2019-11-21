@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{book.delete.delete}"></title>
+</head>
+<body>
+<h1 th:text="#{book.delete.delete}"></h1>
+<h2 th:text="#{book.delete.sure}"></h2>
+<p>
+    <a href="/book" th:text="#{login.title.booklist}"></a>
+</p>
+<form th:action="@{/delete-book}" th:object="${book}" method="post">
+    <input th:type="hidden" name="id" th:field="*{id}">
+    <table>
+        <tr>
+            <td th:text="#{book.create.name}"></td>
+            <td th:text="${book.name}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{book.create.date}"></td>
+            <td th:text="${book.dateOfPurchase}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{book.create.Author}"></td>
+            <td th:text="${book.author}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{book.create.Price}"></td>
+            <td th:text="${book.price}"></td>
+        </tr>
+
+        <tr>
+            <td th:text="#{book.create.Category}"></td>
+            <td th:text="${book.getCategory().getName()}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" th:value="#{book.delete.deleteBook}"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
